@@ -56,6 +56,10 @@ function Login() {
             required
           />
 
+          <p className="muted" style={{ marginTop: "6px" }}>
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </p>
+
           <button type="submit" className="btn btn-solid full-width" disabled={loading}>
             {loading ? 'Signing In...' : 'Login'}
           </button>
