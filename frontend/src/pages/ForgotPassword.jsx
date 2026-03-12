@@ -18,31 +18,35 @@ export default function ForgotPassword() {
 
       setMsg(res.message || "OTP sent to email");
 
-      // Redirect to OTP page
-      navigate("/verify-otp");
+      navigate("/verify-otp", { state: { email } });
 
     } catch (err) {
-      setMsg(err.message);
+      setMsg(err.message || "Something went wrong");
     }
   };
 
   return (
-    <div>
-      <h2>Forgot Password</h2>
+    <div className="container section narrow">
+      <div className="auth-card">
+        <h2>Forgot Password</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Enter registered email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        {msg && <p className="alert">{msg}</p>}
 
-        <button type="submit">Send OTP</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Enter registered email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-      <p>{msg}</p>
+          <button type="submit" className="btn btn-solid full-width">
+            Send OTP
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

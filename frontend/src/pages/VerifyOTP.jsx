@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { apiRequest } from "../api";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function VerifyOTP() {
-  const [email, setEmail] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const email = location.state?.email || "";
+
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState("");
 
@@ -16,6 +21,9 @@ export default function VerifyOTP() {
       });
 
       setMsg(res.message);
+
+      navigate("/reset-password", { state: { email } });
+
     } catch (err) {
       setMsg(err.message);
     }
@@ -26,21 +34,17 @@ export default function VerifyOTP() {
       <h2>Verify OTP</h2>
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <p>Email: {email}</p>
 
         <input
           type="text"
           placeholder="Enter OTP"
+          value={otp}
           onChange={(e) => setOtp(e.target.value)}
           required
         />
 
-        <button type="submit">Verify</button>
+        <button type="submit">Verify OTP</button>
       </form>
 
       <p>{msg}</p>
