@@ -23,6 +23,11 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+transporter.verify((error, success) => {
+  if (error) console.log(error);
+  else console.log("Email server ready");
+});
+
 router.post("/signup", async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -38,7 +43,7 @@ router.post("/signup", async (req, res, next) => {
     const normalizedEmail = email.trim().toLowerCase();
 
     const [existing] = await pool.query(
-      "SELECT id FROM users WHERE email = ?",
+      "SELECT id FROM users WHERE email=?",
       [normalizedEmail]
     );
 
@@ -79,7 +84,7 @@ router.post("/login", async (req, res, next) => {
     const normalizedEmail = email.trim().toLowerCase();
 
     const [rows] = await pool.query(
-      "SELECT id,name,email,role,password_hash FROM users WHERE email = ?",
+      "SELECT id,name,email,role,password_hash FROM users WHERE email=?",
       [normalizedEmail]
     );
 
@@ -121,7 +126,7 @@ router.post("/forgot-password", async (req, res, next) => {
     const normalizedEmail = email.trim().toLowerCase();
 
     const [rows] = await pool.query(
-      "SELECT id FROM users WHERE email = ?",
+      "SELECT id FROM users WHERE email=?",
       [normalizedEmail]
     );
 
@@ -129,19 +134,19 @@ router.post("/forgot-password", async (req, res, next) => {
       return res.status(404).json({ message: "Email not registered." });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiry = new Date(Date.now() + 5 * 60 * 1000);
 
     await pool.query(
-      "UPDATE users SET otp = ?, otp_expiry = ? WHERE email = ?",
+      "UPDATE users SET otp=?, otp_expiry=? WHERE email=?",
       [otp, expiry, normalizedEmail]
     );
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: `"Urban Bites" <${process.env.EMAIL_USER}>`,
       to: normalizedEmail,
       subject: "Password Reset OTP",
-      text: `Your OTP is ${otp}. It expires in 5 minutes.`
+      html: `<h2>Password Reset OTP</h2><h1>${otp}</h1><p>This OTP expires in 5 minutes.</p>`
     });
 
     res.json({ message: "OTP sent to your email." });
@@ -161,7 +166,7 @@ router.post("/verify-otp", async (req, res, next) => {
     const normalizedEmail = email.trim().toLowerCase();
 
     const [rows] = await pool.query(
-      "SELECT otp, otp_expiry FROM users WHERE email = ?",
+      "SELECT otp, otp_expiry FROM users WHERE email=?",
       [normalizedEmail]
     );
 
@@ -171,7 +176,7 @@ router.post("/verify-otp", async (req, res, next) => {
 
     const user = rows[0];
 
-    if (user.otp != otp) {
+    if (user.otp !== otp) {
       return res.status(400).json({ message: "Invalid OTP." });
     }
 
