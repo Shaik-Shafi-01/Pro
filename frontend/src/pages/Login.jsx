@@ -1,29 +1,29 @@
-﻿import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+﻿import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const redirectTo = location.state?.from || '/';
+  const redirectTo = location.state?.from || "/";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       await login(email, password);
       navigate(redirectTo, { replace: true });
     } catch (err) {
-      setError(err.message);
+      setError(err?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ function Login() {
             id="email"
             type="email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -52,16 +52,21 @@ function Login() {
             id="password"
             type="password"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <p className="muted" style={{ marginTop: "6px" }}>
+          {/* Forgot Password Link */}
+          <p className="muted" style={{ marginTop: "8px", marginBottom: "12px" }}>
             <Link to="/forgot-password">Forgot Password?</Link>
           </p>
 
-          <button type="submit" className="btn btn-solid full-width" disabled={loading}>
-            {loading ? 'Signing In...' : 'Login'}
+          <button
+            type="submit"
+            className="btn btn-solid full-width"
+            disabled={loading}
+          >
+            {loading ? "Signing In..." : "Login"}
           </button>
         </form>
 
