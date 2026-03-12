@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { apiRequest } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +17,10 @@ export default function ForgotPassword() {
       });
 
       setMsg(res.message || "OTP sent to email");
+
+      // Redirect to OTP page
+      navigate("/verify-otp");
+
     } catch (err) {
       setMsg(err.message);
     }

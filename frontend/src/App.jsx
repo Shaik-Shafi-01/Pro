@@ -18,6 +18,7 @@ function App() {
   return (
     <div className="app-shell">
       <Navbar />
+
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,6 +26,12 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+
+          {/* Forgot password flow */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+
           <Route
             path="/reservations"
             element={
@@ -33,6 +40,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/orders"
             element={
@@ -41,6 +49,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/admin"
             element={
@@ -49,9 +58,12 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Must always be LAST */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+
       <Footer />
     </div>
   );
