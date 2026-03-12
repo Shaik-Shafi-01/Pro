@@ -10,6 +10,9 @@ import Signup from './pages/Signup';
 import Reservations from './pages/Reservations';
 import Orders from './pages/Orders';
 import AdminDashboard from './pages/AdminDashboard';
+import ForgotPassword from './pages/ForgotPassword';
+import VerifyOTP from './pages/VerifyOTP';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
