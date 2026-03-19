@@ -23,9 +23,12 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-transporter.verify((error, success) => {
-  if (error) console.log(error);
-  else console.log("Email server ready");
+transporter.verify((error) => {
+  if (error) {
+    console.error("❌ Email config error:", error);
+  } else {
+    console.log("✅ Email server ready");
+  }
 });
 
 router.post("/signup", async (req, res, next) => {
@@ -142,15 +145,35 @@ router.post("/forgot-password", async (req, res, next) => {
       [otp, expiry, normalizedEmail]
     );
 
-    await transporter.sendMail({
-      from: `"Urban Bites" <${process.env.EMAIL_USER}>`,
-      to: normalizedEmail,
-      subject: "Password Reset OTP",
-      html: `<h2>Password Reset OTP</h2><h1>${otp}</h1><p>This OTP expires in 5 minutes.</p>`
-    });
+    console.log("🔐 OTP generated:", otp);
+
+    try {
+      await transporter.sendMail({
+        from: `"Urban Bites" <${process.env.EMAIL_USER}>`,
+        to: normalizedEmail,
+        subject: "Password Reset OTP",
+        html: `
+          <h2>Password Reset OTP</h2>
+          <h1>${otp}</h1>
+          <p>This OTP expires in 5 minutes.</p>
+        `
+      });
+
+      console.log("✅ Email sent successfully");
+
+    } catch (mailError) {
+      console.error("❌ MAIL ERROR:", mailError);
+
+      return res.status(500).json({
+        message: "Failed to send email",
+        error: mailError.message
+      });
+    }
 
     res.json({ message: "OTP sent to your email." });
+
   } catch (error) {
+    console.error("❌ FORGOT PASSWORD ERROR:", error);
     next(error);
   }
 });
