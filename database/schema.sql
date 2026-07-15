@@ -7,13 +7,9 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(180) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
   role ENUM('USER', 'ADMIN') NOT NULL DEFAULT 'USER',
-<<<<<<< HEAD
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-=======
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   otp VARCHAR(6),
   otp_expiry DATETIME,
->>>>>>> 3aed39c (updated db)
 );
 
 CREATE TABLE IF NOT EXISTS menu_items (

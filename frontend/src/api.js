@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-export const API_BASE = import.meta.env.VITE_API_URL || 'https://pro-backend-bkyn.onrender.com/api';
-=======
 export const API_BASE = import.meta.env.VITE_API_URL;
->>>>>>> 3aed39c (updated db)
 
 export async function apiRequest(path, options = {}) {
   const token = localStorage.getItem('token');
@@ -22,12 +18,9 @@ export async function apiRequest(path, options = {}) {
     requestOptions.headers['Content-Type'] = 'application/json';
   }
 
-<<<<<<< HEAD
-=======
   // console.log('Url ---------------:', path);
   // console.log('final url--------------', API_BASE + path); // Log the request options for debugging
 
->>>>>>> 3aed39c (updated db)
   const response = await fetch(`${API_BASE}${path}`, requestOptions);
 
   let payload = {};
