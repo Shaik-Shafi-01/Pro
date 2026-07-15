@@ -14,7 +14,11 @@
         <div>
           <h4>Contact</h4>
           <p>+91 6302367989</p>
+<<<<<<< HEAD
           <p>skurbanbites12@gmail.com</p>
+=======
+          <p>shafi36925801@gmail.com</p>
+>>>>>>> 3aed39c (updated db)
         </div>
       </div>
     </footer>

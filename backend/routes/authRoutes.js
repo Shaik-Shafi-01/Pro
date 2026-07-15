@@ -33,6 +33,7 @@ transporter.verify((error) => {
 
 router.post("/signup", async (req, res, next) => {
   try {
+    // console.log("password ----------- "+process.env.DB_PASSWORD);
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -138,7 +139,7 @@ router.post("/forgot-password", async (req, res, next) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry = new Date(Date.now() + 5 * 60 * 1000);
+    const expiry = new Date(Date.now() + 1*24*60*60*1000); // 1 day from now
 
     await pool.query(
       "UPDATE users SET otp=?, otp_expiry=? WHERE email=?",

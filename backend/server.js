@@ -7,6 +7,11 @@ dotenv.config();
 
 const pool = require('./config/db');
 
+<<<<<<< HEAD
+=======
+// console.log("password ----------- "+process.env.DB_PASSWORD);
+
+>>>>>>> 3aed39c (updated db)
 const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 const orderRoutes = require('./routes/orderRoutes');
