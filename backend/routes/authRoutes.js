@@ -4,7 +4,6 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
 const { requireAuth } = require("../middleware/auth");
-const dns=require("dns");
 
 const router = express.Router();
 
