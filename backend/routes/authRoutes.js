@@ -16,13 +16,11 @@ function createToken(user) {
 }
 
 const transporter = nodemailer.createTransport({
-<<<<<<< HEAD
-=======
   // host: "smtp.gmail.com",
   service: "gmail",
   port: 587,
   secure: false,  
->>>>>>> 06d56c8 (updated email service)
+
   requireTLS: true,
   auth: {
     user: process.env.EMAIL_USER,
