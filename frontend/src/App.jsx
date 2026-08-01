@@ -28,7 +28,16 @@ function App() {
           <Route path="/signup" element={<Signup />} />
 
           {/* Forgot password flow */}
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
+          <Route
+  path="/forgot-password"
+  element={
+    <>
+      {/* {console.log("Forgot password route")} */}
+      <ForgotPassword />
+    </>
+  }
+/>
           <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/reset-password" element={<ResetPassword />} />
 
