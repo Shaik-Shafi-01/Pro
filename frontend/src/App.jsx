@@ -33,7 +33,7 @@ function App() {
   path="/forgot-password"
   element={
     <>
-      {/* {console.log("Forgot password route")} */}
+      {console.log("Forgot password route")}
       <ForgotPassword />
     </>
   }
