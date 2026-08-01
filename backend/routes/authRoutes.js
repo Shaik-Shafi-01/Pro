@@ -55,6 +55,9 @@ const transporter = nodemailer.createTransport({
   
 });
 
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
+
 console.log("SMTP CONFIG");
 console.log({
   host: "smtp.gmail.com",
@@ -68,6 +71,10 @@ transporter.verify((error) => {
   } else {
     console.log("✅ Email server ready");
   }
+});
+
+dns.lookup("smtp.gmail.com", (err, address, family) => {
+  console.log("SMTP DNS:", { err, address, family });
 });
 
 router.post("/signup", async (req, res, next) => {
