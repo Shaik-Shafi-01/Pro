@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
 const { requireAuth } = require("../middleware/auth");
+const dns=require("dns");
 
 const router = express.Router();
 
@@ -15,11 +16,22 @@ function createToken(user) {
   );
 }
 
+const dns = require("dns");
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  family: 4, // Force IPv4
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    servername: "smtp.gmail.com",
+  },
+  dnsLookup: (hostname, options, callback) => {
+    dns.lookup(hostname, { family: 4 }, callback);
   },
 });
 
