@@ -23,7 +23,7 @@ export async function apiRequest(path, options = {}) {
 
   const response = await fetch(`${API_BASE}${path}`, requestOptions);
   console.log('path is :', path); // Log the response status for debugging
-  console.log(`final url--------------`, `${API_BASE}${path}`); // Log the request options for debugging
+  console.log(`Final url--------------`, `${API_BASE}${path}`); // Log the request options for debugging
 
   let payload = {};
   try {
