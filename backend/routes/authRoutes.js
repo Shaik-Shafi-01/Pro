@@ -63,8 +63,8 @@ console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
 console.log("SMTP CONFIG");
 console.log({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
 });
 
 transporter.verify((error) => {
