@@ -34,15 +34,35 @@ const dns = require("dns");
 //   },
 // });
 
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
+const nodemailer = require("nodemailer");
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  
 });
 
-transporter.verify((error) => {
+console.log("SMTP CONFIG");
+console.log({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+});
+
+await transporter.verify((error) => {
   if (error) {
     console.error("❌ Email config error:", error);
   } else {
