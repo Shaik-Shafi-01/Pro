@@ -1,3 +1,6 @@
+
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
@@ -15,7 +18,6 @@ function createToken(user) {
   );
 }
 
-const dns = require("dns");
 
 // const transporter = nodemailer.createTransport({
 //   host: "smtp.gmail.com",
@@ -52,7 +54,6 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  
 });
 
 console.log("EMAIL_USER:", process.env.EMAIL_USER);
