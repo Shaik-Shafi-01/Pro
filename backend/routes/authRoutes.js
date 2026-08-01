@@ -62,7 +62,7 @@ console.log({
   secure: false,
 });
 
-await transporter.verify((error) => {
+transporter.verify((error) => {
   if (error) {
     console.error("❌ Email config error:", error);
   } else {
